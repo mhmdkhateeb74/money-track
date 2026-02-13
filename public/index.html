@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+  <div class="bg"></div>
+
+  <main class="container">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">₿</div>
+        <div>
+          <div class="brandTitle">Expense Tracker</div>
+          <div class="brandSub">Track, understand, and improve your spending.</div>
+        </div>
+      </div>
+      <a class="ghostBtn" href="/dashboard.html" id="goDash">Dashboard</a>
+    </header>
+
+    <section class="grid2">
+      <div class="card">
+        <h2>Login</h2>
+        <p class="muted">Welcome back. Sign in to your account.</p>
+
+        <form id="loginForm" class="form">
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="you@email.com" required />
+
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required />
+
+          <button class="primaryBtn" type="submit">Login</button>
+          <div id="loginMsg" class="msg"></div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Create account</h2>
+        <p class="muted">Start tracking today. Set an optional monthly limit.</p>
+
+        <form id="registerForm" class="form">
+          <label>Name</label>
+          <input type="text" id="regName" placeholder="Your name" required />
+
+          <label>Email</label>
+          <input type="email" id="regEmail" placeholder="you@email.com" required />
+
+          <label>Password</label>
+          <input type="password" id="regPassword" placeholder="min 6 chars" minlength="6" required />
+
+          <label>Monthly limit (optional)</label>
+          <input type="number" id="regLimit" placeholder="e.g. 1500" min="0" step="1" />
+
+          <button class="primaryBtn" type="submit">Register</button>
+          <div id="registerMsg" class="msg"></div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="muted">Built with Node.js + MongoDB</span>
+    </footer>
+  </main>
+
+  <script src="/js/auth.js"></script>
+</body>
+</html>
