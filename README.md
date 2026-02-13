@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Expense Tracker Pro (Node.js + MongoDB + Clean UI)
 
 ## Features
@@ -37,3 +38,6 @@ Open:
   - `/api/user`
   - `/api/expenses`
   - `/api/stats`
+=======
+# money-track
+>>>>>>> ad02b70d80cf2a81990fab18fc9cde5b1884eb00
