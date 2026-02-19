@@ -1,38 +1,46 @@
-const path = require("path");
 const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const { connectDb } = require("./config/db");
-
-dotenv.config();
+const mongoose = require("mongoose");
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+/* =============================
+   MongoDB Connection
+============================= */
+
+// إذا شغال Docker رح ياخد MONGO_URI من compose
+// إذا شغال محلي رح يستخدم localhost
+const mongoUri =
+  process.env.MONGO_URI || "mongodb://localhost:27017/money-track";
+
+mongoose
+  .connect(mongoUri)
+  .then(() => {
+    console.log("✅ MongoDB connected successfully");
+  })
+  .catch((err) => {
+    console.error("❌ Failed to connect to MongoDB:", err.message);
+    process.exit(1);
+  });
+
+/* =============================
+   Middleware
+============================= */
+
 app.use(express.json());
 
-// static frontend
-app.use(express.static(path.join(__dirname, "public")));
+/* =============================
+   Test Route
+============================= */
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.json({ message: "Money Track API is running 🚀" });
 });
 
-// routes
-app.use("/api/auth", require("./routes/auth.routes"));
-app.use("/api/user", require("./routes/user.routes"));
-app.use("/api/expenses", require("./routes/expense.routes"));
-app.use("/api/stats", require("./routes/stats.routes"));
+/* =============================
+   Start Server
+============================= */
 
-// start
-const port = process.env.PORT || 3000;
-
-(async () => {
-  try {
-    await connectDb(process.env.MONGO_URI);
-    app.listen(port, () => console.log("✅ Server running: http://localhost:" + port));
-  } catch (err) {
-    console.error("❌ Failed to start:", err.message);
-    process.exit(1);
-  }
-})();
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
