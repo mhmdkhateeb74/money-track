@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard • Expense Tracker</title>
+  <link rel="stylesheet" href="/css/app.css" />
+
+  <!-- ✅ FIX: Use UMD build so Chart is defined -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="bg"></div>
+
+  <main class="container">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">₿</div>
+        <div>
+          <div class="brandTitle">Dashboard</div>
+          <div class="brandSub" id="userLine">Loading...</div>
+        </div>
+      </div>
+
+      <div class="topActions">
+        <button class="ghostBtn" id="logoutBtn">Logout</button>
+      </div>
+    </header>
+
+    <section class="grid3">
+      <div class="card">
+        <h3>Monthly total</h3>
+        <div class="bigNumber" id="monthlyTotal">—</div>
+        <div class="muted" id="monthlyMeta">—</div>
+        <div class="alert" id="limitAlert" style="display:none;"></div>
+      </div>
+
+      <div class="card">
+        <h3>Top category</h3>
+        <div class="bigNumber" id="topCategory">—</div>
+        <div class="muted">Most spending category for selected month</div>
+      </div>
+
+      <div class="card">
+        <h3>Average expense</h3>
+        <div class="bigNumber" id="avgExpense">—</div>
+        <div class="muted">Average value per expense record</div>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="card">
+        <div class="rowBetween">
+          <div>
+            <h2>Add expense</h2>
+            <p class="muted">Keep it simple: amount, category, date.</p>
+          </div>
+          <div class="pill">
+            <select id="monthSelect"></select>
+            <select id="yearSelect"></select>
+          </div>
+        </div>
+
+        <form id="expenseForm" class="form">
+          <label>Amount</label>
+          <input type="number" id="amount" min="0" step="0.01" placeholder="e.g. 25" required />
+
+          <label>Category</label>
+          <input type="text" id="category" placeholder="food / transport / coffee..." required />
+
+          <label>Date</label>
+          <input type="date" id="date" required />
+
+          <label>Note (optional)</label>
+          <input type="text" id="note" placeholder="e.g. lunch with friends" />
+
+          <button class="primaryBtn" type="submit">Add</button>
+          <div id="expenseMsg" class="msg"></div>
+        </form>
+
+        <hr class="sep"/>
+
+        <div class="rowBetween">
+          <h2>Expenses</h2>
+          <div class="pill">
+            <input id="filterCategory" class="miniInput" placeholder="Filter category" />
+            <button class="ghostBtn" id="applyFilterBtn">Apply</button>
+            <button class="ghostBtn" id="clearFilterBtn">Clear</button>
+          </div>
+        </div>
+
+        <div class="tableWrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Note</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="expensesTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Chart</h2>
+        <p class="muted">Daily totals & category breakdown.</p>
+
+        <div class="chartBox">
+          <canvas id="dailyChart"></canvas>
+        </div>
+
+        <div class="chartBox">
+          <canvas id="categoryChart"></canvas>
+        </div>
+
+        <hr class="sep"/>
+
+        <h2>Monthly limit</h2>
+        <p class="muted">Set a budget to get an alert when you exceed it.</p>
+        <div class="rowBetween">
+          <input type="number" id="limitInput" min="0" step="1" class="miniInput" placeholder="e.g. 1500" />
+          <button class="primaryBtn" id="saveLimitBtn">Save</button>
+        </div>
+        <div id="limitMsg" class="msg"></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <a class="muted" href="/">Back to login</a>
+    </footer>
+  </main>
+
+  <!-- keep this LAST -->
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>
