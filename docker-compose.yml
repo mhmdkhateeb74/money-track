@@ -1,6 +1,31 @@
 services:
-  react_shop:
-    build: .
-    ports:
-      - "3000:80"
+  mongo:
+    image: mongo:7
+    container_name: moneytrack-mongo
     restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "mongodb://localhost:27017/test", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    container_name: moneytrack-app
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      NODE_ENV: production
+      MONGO_URI: mongodb://mongo:27017/money-track
+      PORT: 3000
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+volumes:
+  mongo_data:
